@@ -1,8 +1,18 @@
-export default function ProjectsPage() {
+import { fetchMarkdownFile } from '../../lib/data';
+
+export default async function ProjectsPage() {
+  const content = await fetchMarkdownFile('kanban.md');
+
   return (
     <div className="card">
-      <div className="h2">Projects / Kanban</div>
-      <p className="small">This page will render the MangoSol kanban from the data repo.</p>
+      <div className="h2">Project Board (MangoSol)</div>
+      {content ? (
+        <div className="markdown-view" style={{ whiteSpace: 'pre-wrap', fontSize: 14 }}>
+          {content}
+        </div>
+      ) : (
+        <p className="small">Could not load Kanban data from repo.</p>
+      )}
     </div>
   );
 }
