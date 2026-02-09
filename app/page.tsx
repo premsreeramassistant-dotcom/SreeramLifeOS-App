@@ -3,6 +3,7 @@ import TodayPriorities from '../components/TodayPriorities';
 import WeeklyPriorities from '../components/WeeklyPriorities';
 import LifeOSLinks from '../components/LifeOSLinks';
 import StrategicGoals from '../components/StrategicGoals';
+import TaskInbox from '../components/TaskInbox';
 
 export default async function HomePage() {
   return (
@@ -22,10 +23,11 @@ export default async function HomePage() {
 
       <div className="grid grid-2">
         <TodayPriorities />
-        <WeeklyPriorities />
+        <TaskInbox />
       </div>
 
-      <div className="grid grid-2">
+      <div className="grid grid-3">
+        <WeeklyPriorities />
         <LifeOSLinks />
         <div className="card">
           <div className="h2">Quick Focus</div>
