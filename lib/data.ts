@@ -30,3 +30,23 @@ export async function fetchJSONData(filename: string) {
     return null;
   }
 }
+
+export function parseMarkdownTable(markdown: string) {
+  const lines = markdown.split('\n');
+  const tableStart = lines.findIndex(l => l.includes('|') && l.includes('---'));
+  if (tableStart === -1) return [];
+
+  const headers = lines[tableStart - 1].split('|').map(h => h.trim()).filter(Boolean);
+  const dataLines = lines.slice(tableStart + 1);
+
+  return dataLines
+    .filter(l => l.includes('|'))
+    .map(line => {
+      const values = line.split('|').map(v => v.trim()).filter(Boolean);
+      const row: any = {};
+      headers.forEach((header, i) => {
+        row[header.toLowerCase()] = values[i];
+      });
+      return row;
+    });
+}
