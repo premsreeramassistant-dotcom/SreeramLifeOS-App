@@ -1,4 +1,5 @@
 import { fetchMarkdownFile } from '../../../lib/data';
+import ReactMarkdown from 'react-markdown';
 
 export default async function ViewPage({ params }: { params: { path: string[] } }) {
   const path = params.path.join('/');
@@ -10,9 +11,23 @@ export default async function ViewPage({ params }: { params: { path: string[] } 
         <a href="/" className="small">← Back to Dashboard</a>
       </div>
       <h1 className="h2" style={{ borderBottom: '1px solid #1f2a3a', paddingBottom: 10 }}>Viewing: {path}</h1>
-      <div className="markdown-view" style={{ whiteSpace: 'pre-wrap', marginTop: 20, fontSize: 15, lineHeight: 1.6 }}>
-        {content || 'File content could not be loaded.'}
+      <div className="markdown-content" style={{ marginTop: 20 }}>
+        {content ? (
+          <ReactMarkdown>{content}</ReactMarkdown>
+        ) : (
+          <p className="small">File content could not be loaded.</p>
+        )}
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .markdown-content h1 { font-size: 24px; margin: 20px 0 10px; }
+        .markdown-content h2 { font-size: 20px; margin: 16px 0 8px; border-bottom: 1px solid #1f2a3a; padding-bottom: 4px; }
+        .markdown-content p { margin-bottom: 12px; line-height: 1.6; }
+        .markdown-content ul { padding-left: 20px; margin-bottom: 12px; }
+        .markdown-content li { margin-bottom: 4px; }
+        .markdown-content table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+        .markdown-content th, .markdown-content td { border: 1px solid #1f2a3a; padding: 8px; text-align: left; }
+        .markdown-content th { background: #1f2a3a; }
+      `}} />
     </div>
   );
 }
