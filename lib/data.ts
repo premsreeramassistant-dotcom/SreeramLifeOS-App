@@ -4,12 +4,17 @@ export async function fetchMarkdownFile(path: string) {
   const REPO = "SreeramLifeOS-Data";
   const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/master/data/${path}`;
 
+  console.log(`Fetching ${path} from ${REPO}... Token length: ${GITHUB_TOKEN?.length || 0}`);
+
   const response = await fetch(url, {
     headers: GITHUB_TOKEN ? { 'Authorization': `token ${GITHUB_TOKEN}` } : {},
     next: { revalidate: 60 }
   });
 
-  if (!response.ok) return null;
+  if (!response.ok) {
+    console.error(`Failed to fetch ${path}: ${response.status} ${response.statusText}`);
+    return null;
+  }
   return response.text();
 }
 

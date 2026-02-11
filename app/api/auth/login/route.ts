@@ -31,11 +31,10 @@ export async function POST(request: Request) {
       console.log('Login successful for:', username);
       const response = NextResponse.json({ success: true });
       
-      // IMPORTANT: Setting secure: false for now because we are on http://
-      // We will re-enable this once we add SSL/HTTPS to negotiai.com
+      // Re-enabling secure cookies now that HTTPS is live
       response.cookies.set('lifeos_session', 'true', { 
         httpOnly: true, 
-        secure: false, 
+        secure: true, 
         path: '/',
         maxAge: 60 * 60 * 24 * 7 // 1 week
       });
