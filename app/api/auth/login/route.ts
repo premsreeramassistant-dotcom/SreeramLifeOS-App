@@ -31,10 +31,10 @@ export async function POST(request: Request) {
       console.log('Login successful for:', username);
       const response = NextResponse.json({ success: true });
       
-      // Re-enabling secure cookies now that HTTPS is live
+      // Set session cookie (secure: false for HTTP deployment)
       response.cookies.set('lifeos_session', 'true', { 
         httpOnly: true, 
-        secure: true, 
+        secure: false, 
         path: '/',
         maxAge: 60 * 60 * 24 * 7 // 1 week
       });
